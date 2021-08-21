@@ -4,6 +4,7 @@ import Home from '../Route/Home';
 import Search from '../Route/Search';
 import TV from '../Route/TV';
 import Header from './Header';
+import Detail from '../Route/Detail';
 
 export default () => (
     <Router>
@@ -13,6 +14,8 @@ export default () => (
             <Route path='/' exact component={Home} />
             <Route path='/tv' component={TV} />
             <Route path='/search' component={Search} />
+            <Route path='/movie/:id' component={Detail} />
+            <Route path='/show/:id' component={Detail} />
             <Redirect from='*' to='/' /> {/*다른 주소로 갔을 때 /으로 돌아오도록 한다*/}
         </Switch>
         </>

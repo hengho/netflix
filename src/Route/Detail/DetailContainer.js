@@ -1,11 +1,48 @@
 import React from 'react';
+import { movieapi, tvapi } from '../../api';
 import DetailPresenter from './DetailPresenter';
 
 export default class extends React.Component{
-    state = {
-        result: null,
-        error:null,
-        loading:true
+    constructor(props){
+        super(props);
+        const {location: {pathname}} = props;
+        this.state = {
+            result: null,
+            error:null,
+            loading:true,
+            isMovie: pathname.includes('/movie/')
+        }
+    }
+    
+
+    async componentDidMount(){
+        const {
+            match:{
+                params: {id}
+            },
+            history: {push},
+            location: {pathname}
+        } = this.props;
+        const {isMovie} = this.state;
+        const parsedId = parseInt(id);
+        if(isNaN(parsedId)){
+            return push('/'); //return은 function을 끝내기 위해 사용
+        }
+        let result;
+        try{
+            if(isMovie){
+                ({data: result} = await movieapi.movieDetail(parsedId));
+                result = request.data;
+            }
+            else{
+                ({data: result} = await tvapi.showDetail(parsedId));
+                result = request.data;
+            }
+        }catch{
+            this.setState({error: "can't find anything."});
+        }finally{
+            this.setState({ loading: false, result })
+        }
     }
 
     render() {
