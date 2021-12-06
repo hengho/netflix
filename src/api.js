@@ -8,8 +8,6 @@ const api = axios.create({
     }
 })
 
-api.get('tv/popular');
-
 export const movieapi = {
     nowPlaying: () => api.get('movie/now_playing'),
     upcoming: () => api.get('movie/upcoming'),
@@ -35,8 +33,8 @@ export const tvapi = {
             append_to_response: 'videos'
         }
     }),
-    search: term => api.get('search/tv', {
-        parans: {
+    search: (term) => api.get('search/tv', {
+        params: {
             query: encodeURIComponent(term)
         }
     })

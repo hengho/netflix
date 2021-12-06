@@ -32,11 +32,9 @@ export default class extends React.Component{
         try{
             if(isMovie){
                 ({data: result} = await movieapi.movieDetail(parsedId));
-                result = request.data;
             }
             else{
                 ({data: result} = await tvapi.showDetail(parsedId));
-                result = request.data;
             }
         }catch{
             this.setState({error: "can't find anything."});
